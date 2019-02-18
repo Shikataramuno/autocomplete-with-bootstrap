@@ -6,13 +6,13 @@
       @keydown.down="onArrowDown"
       @keydown.up="onArrowUp"
       @keydown.enter="onEnter"/>
-    <ul ref="list" class="autocomplete-results" v-show="isOpen">
-      <li class="autocomplete-result" v-for="(result, i) in results" :key="i"
+    <b-list-group ref="list" class="autocomplete-results" v-show="isOpen">
+      <b-list-group-item class="autocomplete-result" v-for="(result, i) in results" :key="i"
         @click="setResult(result)"
         :class="{ 'is-active': i === arrowCounter }">
         {{ result.value }}
-      </li>
-    </ul>
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ export default class AutoComplete extends Vue {
   onArrowDown(): void {
     if (this.arrowCounter < this.results.length - 1) {
       this.arrowCounter = this.arrowCounter + 1;
-      const scrollTop = (this.arrowCounter - 3) * 32 + 8;
+      const scrollTop = (this.arrowCounter - 2) * 32 + 8;
       if (this.$refs.list.scrollTop < scrollTop) {
         this.$refs.list.scrollTop = scrollTop;
       }
@@ -158,7 +158,7 @@ export default class AutoComplete extends Vue {
   padding: 0;
   margin: 0;
   border: 1px solid #eeeeee;
-  max-height: 120px;
+  max-height: 96px;
   overflow: auto;
   width: 100%;
   background-color: #FFFFFF;
