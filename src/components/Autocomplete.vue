@@ -43,15 +43,11 @@ export default class AutoComplete extends Vue {
   @Emit('input')
   onChange(): OptionItem {
     // Let's  our flat array
-    console.log('onChange');
+    console.log('onChange : ' + this.search);
     this.filterResults();
     console.log(this.results);
     this.isOpen = true;
-    if (this.onChangeEvent) {
-      return new OptionItem(this.search, this.search);
-    } else {
-      return new OptionItem('', '');
-    }
+    return new OptionItem(this.search, this.search);
   }
 
   filterResults(): void {
@@ -63,10 +59,11 @@ export default class AutoComplete extends Vue {
   }
 
   @Emit('input')
-  setResult(): void {
+  setResult(result: OptionItem): OptionItem {
     this.isOpen = false;
     // Let's warn the parent that a change was made
-    // this.search = this.option;
+    this.search = result.value;
+    return result;
   }
 
   onArrowDown(): void {
@@ -172,8 +169,7 @@ export default class AutoComplete extends Vue {
   padding: 4px 2px;
   cursor: pointer;
 }
-.autocomplete-result.is-active,
-.autocomplete-result:hover {
+.autocomplete-result.is-active{
   background-color: #4AAE9B;
   color: white;
 }
